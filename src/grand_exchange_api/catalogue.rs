@@ -1,5 +1,26 @@
-// #[macro_use]
-// extern crate enum_primitive;
+
+extern crate reqwest;
+extern crate serde;
+extern crate serde_json;
+
+use serde_json::Value;
+
+use grand_exchange_api::request;
+use grand_exchange_api::configuration::ConfigInfo;
+
+static BASE_URL: &str = "http://services.runescape.com/m=itemdb_rs/api/catalogue/category.json?category=";
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct Catalogue {
+    types: Vec<Value>,
+    alpha: Vec<AlphaResult>
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+struct AlphaResult {
+    letter: String,
+    items: u8
+}
 
 #[derive(Debug)]
 pub enum ItemCategory {
@@ -131,4 +152,10 @@ impl ItemCategory {
             _ => None
         }
     }
+}
+
+pub fn query(category: ItemCategory) -> Option<Catalogue> {
+    let s = ItemCategory::from_category(category).unwrap().to_string();
+    let url = BASE_URL.to_owned() + s.as_str();
+    return self::request::<Catalogue>(&url);
 }
