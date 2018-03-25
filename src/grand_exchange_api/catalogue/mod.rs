@@ -1,4 +1,7 @@
 
+pub mod detail;
+pub mod items;
+
 extern crate reqwest;
 extern crate serde;
 extern crate serde_json;
@@ -17,7 +20,7 @@ pub struct Catalogue {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-struct AlphaResult {
+pub struct AlphaResult {
     letter: String,
     items: u8
 }
