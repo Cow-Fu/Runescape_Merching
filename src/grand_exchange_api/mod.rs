@@ -2,6 +2,7 @@
 
 pub mod catalogue;
 pub mod configuration;
+pub mod graph;
 
 extern crate reqwest;
 extern crate serde;
